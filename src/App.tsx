@@ -50,6 +50,8 @@ function AppRoutes() {
           <Route path="/video-call/:roomId" element={<VideoRoom />} />
           <Route path="/notifications" element={<div className="px-6"><h1 className="text-2xl font-bold">Notifications (Coming Soon)</h1></div>} />
           <Route path="/settings" element={<div className="px-6"><h1 className="text-2xl font-bold">Settings (Coming Soon)</h1></div>} />
+          {/* Catch all route - redirect to dashboard */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </RbacProvider>
     </Layout>
