@@ -59,6 +59,17 @@ function AppRoutes() {
 }
 
 function App() {
+  // Clear authentication data on production app load
+  if (import.meta.env.PROD || window.location.hostname !== 'localhost') {
+    // Only clear on initial load, not on every render
+    if (!sessionStorage.getItem('prodInitialized')) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('currentUser');
+      sessionStorage.setItem('prodInitialized', 'true');
+    }
+  }
+
   return (
     <AuthProvider>
       <SecurityProvider>
