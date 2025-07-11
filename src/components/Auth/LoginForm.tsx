@@ -157,43 +157,21 @@ export function LoginForm() {
             </div>
 
             <div className="mt-4 space-y-2">
-              <div className="grid grid-cols-1 gap-2">
-                {/* Show different roles */}
-                {[
-                  mockUsers.find(u => u.role === 'DEPARTMENT_HEAD'),
-                  mockUsers.find(u => u.role === 'MANAGER'),
-                  mockUsers.find(u => u.role === 'TEAM_LEAD'),
-                  mockUsers.find(u => u.role === 'EMPLOYEE')
-                ].filter(Boolean).map((user) => (
-                  <button
-                    key={user!.id}
-                    onClick={() => handleDemoLogin(user!.email)}
-                    className="w-full text-left px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{user!.name}</p>
-                        <p className="text-xs text-gray-500 capitalize">
-                          {user!.role.replace('_', ' ').toLowerCase()}
-                        </p>
-                        <p className="text-xs text-gray-400">{user!.email}</p>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-xs text-blue-600 font-medium group-hover:text-blue-700">
-                          Try Demo
-                        </span>
-                        <p className="text-xs text-gray-400">password</p>
-                      </div>
+              {mockUsers.slice(0, 3).map((user) => (
+                <button
+                  key={user.id}
+                  onClick={() => handleDemoLogin(user.email)}
+                  className="w-full text-left px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                      <p className="text-xs text-gray-500">{user.role.replace('_', ' ')}</p>
                     </div>
-                  </button>
-                ))}
-              </div>
-              
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                <p className="text-xs text-blue-700">
-                  <strong>Demo Info:</strong> All accounts use password "password". Click any account above to auto-fill login credentials.
-                </p>
-              </div>
+                    <span className="text-xs text-blue-800">Try Demo</span>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>

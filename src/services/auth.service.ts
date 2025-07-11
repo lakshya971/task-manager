@@ -309,37 +309,4 @@ export class AuthService {
       return false;
     }
   }
-
-  /**
-   * Clear all authentication data (useful for production deployment)
-   */
-  static clearAllAuthData(): void {
-    try {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('currentUser');
-      
-      // Clear any other auth-related localStorage items
-      const keysToRemove = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && (key.includes('auth') || key.includes('token') || key.includes('user'))) {
-          keysToRemove.push(key);
-        }
-      }
-      
-      keysToRemove.forEach(key => localStorage.removeItem(key));
-      
-      console.log('All authentication data cleared');
-    } catch (error) {
-      console.error('Error clearing auth data:', error);
-    }
-  }
-
-  /**
-   * Check if app is in production environment
-   */
-  static isProduction(): boolean {
-    return import.meta.env.PROD || window.location.hostname !== 'localhost';
-  }
 }

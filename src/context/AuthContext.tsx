@@ -33,35 +33,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Initialize audit service
       AuditService.initialize();
       
-      // In production, always clear authentication and force login
-      if (AuthService.isProduction()) {
-        AuthService.clearAllAuthData();
-        setUser(null);
-        setIsLoading(false);
-        return;
-      }
-      
-      // Only validate session in development
+      // Check if user has valid session
       const isValid = await AuthService.validateSession();
       if (isValid) {
         const currentUser = AuthService.getCurrentUser();
         if (currentUser) {
           setUser(currentUser);
         }
-      } else {
-        // Clear any invalid session data
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('currentUser');
-        setUser(null);
       }
     } catch (error) {
       console.error('Auth initialization error:', error);
-      // Clear session on error
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('currentUser');
-      setUser(null);
+      await AuthService.forceLogout('initialization_error');
     } finally {
       setIsLoading(false);
     }
